@@ -24,7 +24,7 @@ async function run() {
     const adverticesCollection = client.db('laptopWorld').collection('advertices')
     const categoriesCollection = client.db('laptopWorld').collection('categories')
 
-    app.post('/categories', async(req,res)=>{
+    app.post('/categories', async (req, res) => {
       const category = req.body;
       const result = await categoriesCollection.insertOne(category);
       res.send(result)
@@ -37,28 +37,33 @@ async function run() {
     app.get('/categoryProduct/:id', async (req, res) => {
       const id = req.params.id;
       console.log(id)
-      const query = {categoryId:id}
+      const query = { categoryId: id }
       const users = await productsCollection.find(query).toArray()
       res.send(users)
       console.log(users);
     })
     app.get('/userVerify/:email', async (req, res) => {
       const email = req.params.email;
-      const query = {email : email};
+      const query = { email: email };
       const users = await usersCollection.findOne(query);
-      
-      res.send(users);
-  });
 
-    app.get('/advertice', async(req,res)=>{
-      const query = {isAdvertice:true}
+      res.send(users);
+    });
+
+    app.get('/advertice', async (req, res) => {
+      const query = { isAdvertice: true }
       const adverticeProduct = await productsCollection.find(query).toArray()
       res.send(adverticeProduct)
     })
 
 
     app.get('/users', async (req, res) => {
-      const query = {}
+      const query = {displayUser : 'user'}
+      const users = await usersCollection.find(query).toArray()
+      res.send(users)
+    })
+    app.get('/sellers', async (req, res) => {
+      const query = { displayUser : 'seller'}
       const users = await usersCollection.find(query).toArray()
       res.send(users)
     })
@@ -74,7 +79,7 @@ async function run() {
       const products = await productsCollection.find(query).toArray()
       res.send(products)
     })
-    
+
     app.get('/products/:id', async (req, res) => {
 
       const id = req.params.id;
@@ -83,14 +88,14 @@ async function run() {
       res.send(product)
     })
     //advertice
-    app.patch('/products/:id', async(req,res)=>{
+    app.patch('/products/:id', async (req, res) => {
       const id = req.params.id;
       const query = req.query;
-      const filter = {_id: ObjectId(id)}
-      let result 
-      if(query?.advertice){
-        result = await productsCollection.updateOne(filter,{$set: {isAdvertice : true}})
-        
+      const filter = { _id: ObjectId(id) }
+      let result
+      if (query?.advertice) {
+        result = await productsCollection.updateOne(filter, { $set: { isAdvertice: true } })
+
       }
       res.send(result)
     })
@@ -106,17 +111,17 @@ async function run() {
       const products = await productsCollection.find(query).toArray()
       res.send(products)
     })
-   
 
-    app.put('/products/:id', async(req, res) =>{
+
+    app.put('/products/:id', async (req, res) => {
       const id = req.params.id;
-      const filter = {_id : ObjectId(id)}
+      const filter = { _id: ObjectId(id) }
       const product = req.body;
-      const option = {upsert : true}
+      const option = { upsert: true }
       const updateProduct = {
-        $set : {
-          price : product.price,
-          location : product.location,
+        $set: {
+          price: product.price,
+          location: product.location,
 
         }
       }
@@ -139,7 +144,18 @@ async function run() {
     //   res.send(result)
     // })
 
-    
+    app.delete('/deleteProduct/:id', async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: ObjectId(id) };
+      const result = await productsCollection.deleteOne(query)
+      res.send(result)
+    })
+    app.delete('/userDelete/:id', async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: ObjectId(id) };
+      const result = await usersCollection.deleteOne(query)
+      res.send(result)
+    })
     app.post('/products', async (req, res) => {
       const product = req.body;
       console.log(product)
@@ -148,19 +164,19 @@ async function run() {
     })
     // Bookings 
 
-    app.get('/bookings', async(req, res) =>{
+    app.get('/bookings', async (req, res) => {
       const query = {}
       const bookings = await bookingsCollection.find(query).toArray()
       res.send(bookings)
     })
 
-    app.post('/bookings', async(req, res) =>{
+    app.post('/bookings', async (req, res) => {
       const booking = req.body
       const bookings = await bookingsCollection.insertOne(booking)
       res.send(bookings)
     })
 
-    
+
 
 
   }
