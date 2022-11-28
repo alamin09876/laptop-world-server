@@ -153,17 +153,7 @@ async function run() {
     })
     // Bookings 
 
-    app.get('/bookings', async(req, res) =>{
-      const query = {}
-      const bookings = await bookingsCollection.find(query).toArray()
-      res.send(bookings)
-    })
-
-    app.post('/bookings', async(req, res) =>{
-      const booking = req.body
-      const bookings = await bookingsCollection.insertOne(booking)
-      res.send(bookings)
-    })
+    
 
     
 
