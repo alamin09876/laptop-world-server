@@ -129,27 +129,22 @@ async function run() {
       res.send(result)
     })
 
-    // app.put('/products/:id', async(req, res) =>{
-    //   const id = req.params.id;
-    //   const filter = {_id : ObjectId(id)}
-    //   const product = req.body;
-    //   const option = {upsert : true}
-    //   const updateProduct = {
-    //     $set : {
-    //       isAdvertice : product.isAdvertice,
-
-    //     }
-    //   }
-    //   const result = await productsCollection.updateOne(filter, updateProduct, option)
-    //   res.send(result)
-    // })
-
-    app.delete('/deleteProduct/:id', async (req, res) => {
+    app.put('/products/:id', async(req, res) =>{
       const id = req.params.id;
-      const query = { _id: ObjectId(id) };
-      const result = await productsCollection.deleteOne(query)
+      const filter = {_id : ObjectId(id)}
+      const product = req.body;
+      const option = {upsert : true}
+      const updateProduct = {
+        $set : {
+          isAdvertice : product.isAdvertice,
+
+        }
+      }
+      const result = await productsCollection.updateOne(filter, updateProduct, option)
       res.send(result)
     })
+
+   
     app.delete('/userDelete/:id', async (req, res) => {
       const id = req.params.id;
       const query = { _id: ObjectId(id) };
