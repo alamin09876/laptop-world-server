@@ -165,18 +165,7 @@ async function run() {
       res.send(bookings)
     })
 
-    // advertice 
-    // app.get('/advertices', async(req, res) =>{
-    //   const query = {isAdvertice:true}
-    //   const advertices = await productsCollection.find(query).toArray()
-    //   res.send(advertices)
-    // })
-
-    // app.post('/advertices', async(req, res) =>{
-    //   const advertice = req.body
-    //   const advertices = await adverticesCollection.insertOne(advertice)
-    //   res.send(advertices)
-    // })
+    
 
 
   }
