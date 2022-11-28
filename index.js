@@ -145,15 +145,20 @@ async function run() {
       const result = await productsCollection.deleteOne(query)
       res.send(result)
     })
-    app.post('/products', async (req, res) => {
-      const product = req.body;
-      console.log(product)
-      const result = await productsCollection.insertOne(product);
-      res.send(result)
-    })
+    
     // Bookings 
 
-    
+    app.get('/bookings', async(req, res) =>{
+      const query = {}
+      const bookings = await bookingsCollection.find(query).toArray()
+      res.send(bookings)
+    })
+
+    app.post('/bookings', async(req, res) =>{
+      const booking = req.body
+      const bookings = await bookingsCollection.insertOne(booking)
+      res.send(bookings)
+    })
 
     
 
