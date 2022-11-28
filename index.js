@@ -56,7 +56,7 @@ async function run() {
       res.send(adverticeProduct)
     })
 
-
+// users
     app.get('/users', async (req, res) => {
       const query = {displayUser : 'user'}
       const users = await usersCollection.find(query).toArray()
