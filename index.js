@@ -139,13 +139,13 @@ async function run() {
     //   res.send(result)
     // })
 
-    app.delete('/product/:id', async(req, res)=>{
-      const id = req.params.id;
-      const query = {_id : ObjectId(id)};
-      const result = await productsCollection.deleteOne(query)
+    
+    app.post('/products', async (req, res) => {
+      const product = req.body;
+      console.log(product)
+      const result = await productsCollection.insertOne(product);
       res.send(result)
     })
-    
     // Bookings 
 
     app.get('/bookings', async(req, res) =>{
